@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>12-Week Transformation Tracker</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            color: #3498db;
+        }
+        .meal-section, .workout-day {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #ecf0f1;
+        }
+        .meal-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .meal-item label {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        /* Workout Table Styling */
+        .workout-day table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .workout-day th, .workout-day td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        .workout-day th {
+            background-color: #3498db;
+            color: white;
+        }
+        .workout-day input[type="text"] {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        /* Progress Bar Styling */
+        #progress-tracker {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #d1e7dd;
+            border: 1px solid #a3cfb6;
+            border-radius: 8px;
+        }
+        .week-checkbox {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔥 12-Week Fitness Transformation Tracker</h1>
+
+    <h2>🗓️ 12-Week Progress Tracker</h2>
+    <div id="progress-tracker">
+        <p>Check off each week as you complete it:</p>
+        </div>
+
+    <h2>🍎 Daily Nutrition Checklist</h2>
+    <p>Check off each meal once you've eaten it. Try to use one of the variety options today!</p>
+    <div class="meal-section" id="meal-list">
+        </div>
+
+    <h2>🏋️ Daily Workout Plan (Adjustable)</h2>
+
+    <div class="workout-day">
+        <h3>Monday (Day 1) - Chest & Triceps</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight (kg)</th>
+                    <th>Rest (s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dumbbell Incline bench press</td><td><input type="text" value="4"></td><td><input type="text" value="8-10"></td><td><input type="text" value="12.5"></td><td>90</td></tr>
+                <tr><td>Dumbbell standing shoulder press</td><td><input type="text" value="4"></td><td><input type="text" value="6-8"></td><td><input type="text" value="12.5"></td><td>90</td></tr>
+                <tr><td>Cable bent over chest fly</td><td><input type="text" value="3"></td><td><input type="text" value="10-12"></td><td><input type="text" value="40"></td><td>90</td></tr>
+                <tr><td>Cuffed lateral raises</td><td><input type="text" value="3"></td><td><input type="text" value="15-20"></td><td><input type="text" value="15"></td><td>90</td></tr>
+                <tr><td>Cable straight bar triceps pushdown</td><td><input type="text" value="3"></td><td><input type="text" value="12-15"></td><td><input type="text" value="40"></td><td>90</td></tr>
+                <tr><td>Cable standing overhead triceps extension</td><td><input type="text" value="3"></td><td><input type="text" value="15-20"></td><td><input type="text" value="20"></td><td>90</td></tr>
+                <tr><td colspan="5">**Abdominal Circuit** (3 Rounds): Elbow plank (3-60s) / Cable kneeling crunch (15-20 reps) / Lying straight leg raise (15-20 reps) / Rest 60s</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="workout-day">
+        <h3>Wednesday (Day 3) - Back & Biceps</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight (kg)</th>
+                    <th>Rest (s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Lat Machine wide grip pulldown</td><td><input type="text" value="4"></td><td><input type="text" value="10-12"></td><td><input type="text" value="50"></td><td>90</td></tr>
+                <tr><td>Barbell bent over row</td><td><input type="text" value="4"></td><td><input type="text" value="5-8"></td><td><input type="text" value="40"></td><td>90</td></tr>
+                <tr><td>Cable seated row</td><td><input type="text" value="4"></td><td><input type="text" value="10-12"></td><td><input type="text" value="35"></td><td>90</td></tr>
+                <tr><td>Barbell shrug</td><td><input type="text" value="2"></td><td><input type="text" value="12-15"></td><td><input type="text" value="30"></td><td>90</td></tr>
+                <tr><td>Barbell bicep curl</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="15"></td><td>90</td></tr>
+                <tr><td>Cable single arm bicep curl</td><td><input type="text" value="2"></td><td><input type="text" value="15-20"></td><td><input type="text" value="20"></td><td>90</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="workout-day">
+        <h3>Friday (Day 5) - Legs & Abs + Cardio</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight (kg)</th>
+                    <th>Rest (s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Machine seated leg curl</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="45"></td><td>90</td></tr>
+                <tr><td>Hack Squats</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="55"></td><td>90</td></tr>
+                <tr><td>Seated leg press</td><td><input type="text" value="4"></td><td><input type="text" value="15-20"></td><td><input type="text" value="55"></td><td>90</td></tr>
+                <tr><td>Barbell romanian deadlift</td><td><input type="text" value="2"></td><td><input type="text" value="10-15"></td><td><input type="text" value="20"></td><td>90</td></tr>
+                <tr><td>Machine seated calf raise</td><td><input type="text" value="4"></td><td><input type="text" value="10-15"></td><td><input type="text" value="30"></td><td>90</td></tr>
+                <tr><td>Dumbbell walking lunge</td><td><input type="text" value="1"></td><td><input type="text" value="Until Failure"></td><td><input type="text" value="10"></td><td>-</td></tr>
+                <tr><td colspan="5">**Abdominal Circuit** (3 Rounds): Elbow plank (3-60s) / Cable kneeling crunch (15-20 reps) / Lying straight leg raise (15-20 reps) / Rest 60s</td></tr>
+                <tr><td colspan="5">**30 minutes Cardio** (Bike, jog, swim etc.)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="workout-day">
+        <h3>Saturday (Day 6) - Arms Focus</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight (kg)</th>
+                    <th>Rest (s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Crossbody hammer curls</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="10"></td><td>60</td></tr>
+                <tr><td>EZ Bar preacher curl</td><td><input type="text" value="3"></td><td><input type="text" value="8-10"></td><td><input type="text" value="10"></td><td>60</td></tr>
+                <tr><td>Barbell bicep curl</td><td><input type="text" value="2"></td><td><input type="text" value="8"></td><td><input type="text" value="17.5"></td><td>60</td></tr>
+                <tr><td>Cable rope triceps extension</td><td><input type="text" value="4"></td><td><input type="text" value="12"></td><td><input type="text" value="40"></td><td>60</td></tr>
+                <tr><td>Plate weighted dip</td><td><input type="text" value="3"></td><td><input type="text" value="8-12"></td><td><input type="text" value="Body Weight"></td><td>60</td></tr>
+                <tr><td>Cable standing overhead triceps extension</td><td><input type="text" value="3"></td><td><input type="text" value="15-20"></td><td><input type="text" value="20"></td><td>60</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // List of meals
+        const meals = [
+            "Meal 1: Sourdough, Cheese, Eggs, Banana",
+            "Meal 2: Chicken, Rice, Veg, Olive Oil",
+            "Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil",
+            "Meal 4: Oats, Whey Protein, Chocolate, Blueberries"
+        ];
+        
+        const mealListDiv = document.getElementById('meal-list');
+
+        // Dynamically create meal checkboxes
+        meals.forEach((meal, index) => {
+            const mealItem = document.createElement('div');
+            mealItem.className = 'meal-item';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `meal-${index}`;
+            // Load state from local storage (so it remembers your checks)
+            checkbox.checked = localStorage.getItem(`meal-${index}`) === 'true';
+
+            // Save state when clicked
+            checkbox.addEventListener('change', (e) => {
+                localStorage.setItem(`meal-${index}`, e.target.checked);
+            });
+
+            const label = document.createElement('label');
+            label.htmlFor = `meal-${index}`;
+            label.textContent = meal;
+
+            mealItem.appendChild(checkbox);
+            mealItem.appendChild(label);
+            mealListDiv.appendChild(mealItem);
+        });
+
+        // 12-Week Progress Checkboxes
+        const progressTrackerDiv = document.getElementById('progress-tracker');
+        for (let i = 1; i <= 12; i++) {
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'week-checkbox';
+            checkbox.id = `week-${i}`;
+            checkbox.checked = localStorage.getItem(`week-${i}`) === 'true';
+            
+            checkbox.addEventListener('change', (e) => {
+                localStorage.setItem(`week-${i}`, e.target.checked);
+            });
+
+            const label = document.createElement('label');
+            label.htmlFor = `week-${i}`;
+            label.textContent = `Week ${i}`;
+
+            progressTrackerDiv.appendChild(checkbox);
+            progressTrackerDiv.appendChild(label);
+            // Add a line break every 4 weeks for better display
+            if (i % 4 === 0 && i !== 12) {
+                progressTrackerDiv.appendChild(document.createElement('br'));
+            }
+        }
+
+        // NOTE on Workout Inputs: The weight/set/rep inputs are saved *only* if you don't close the browser window. 
+        // For permanent saving across sessions, you would need more advanced JavaScript.
+    </script>
+</div>
+
+</body>
+</html>

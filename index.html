@@ -79,6 +79,41 @@
         .week-checkbox {
             margin: 5px;
         }
+   /* New Meal Generator Styles */
+        .generator-section {
+            padding: 20px;
+            background-color: #e0f7fa; /* Light blue background for emphasis */
+            border: 2px solid #00bcd4;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .generator-section h2 {
+            color: #00bcd4;
+            border-bottom: 2px solid #00bcd4;
+        }
+        .meal-prompt {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .meal-prompt select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-top: 5px;
+        }
+        #recipe-output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #00bcd4;
+            background-color: #ffffff;
+            border-radius: 5px;
+            min-height: 80px; /* Ensures space even when empty */
+        }
+        #recipe-output h4 {
+            color: #2c3e50;
+            margin-top: 0;
+        } 
     </style>
 </head>
 <body>
@@ -256,8 +291,62 @@
 
         // NOTE on Workout Inputs: The weight/set/rep inputs are saved *only* if you don't close the browser window. 
         // For permanent saving across sessions, you would need more advanced JavaScript.
+        <div class="generator-section">
+        <h2>🍜 Meal Variety Generator</h2>
+
+        <div class="meal-prompt">
+            <label for="meal-selection">Which meal are you planning?</label>
+            <select id="meal-selection" onchange="generateRecipe()">
+                <option value="">-- Select a Meal --</option>
+                <option value="M2">Meal 2 (Chicken)</option>
+                <option value="M3">Meal 3 (Pork Mince)</option>
+            </select>
+        </div>
+
+        <div class="meal-prompt">
+            <label for="flavor-selection">What flavor are you craving?</label>
+            <select id="flavor-selection" onchange="generateRecipe()">
+                <option value="">-- Select a Flavor --</option>
+                <option value="Savory">Savory / Earthy</option>
+                <option value="Spicy">Spicy / Bold</option>
+                <option value="Fresh">Fresh / Herby / Zesty</option>
+            </select>
+        </div>
+
+        <div id="recipe-output">
+            <h4>Your Custom Recipe:</h4>
+            <p>Select a meal and a flavor to generate a recipe idea!</p>
+            // --- Meal Variety Logic ---
+    const recipes = {
+        M2: { // Meal 2: Chicken, Rice, Veg, Olive Oil
+            Savory: "Chicken Fried Rice: Fry diced chicken (225g) with garlic, onion powder, and 5g olive oil. Add cooked rice (125g) and vegetables (60kcal). Stir-fry until heated and well-seasoned.",
+            Spicy: "Spicy Chicken Stir-fry: Cube chicken (225g) and coat in chili powder, paprika, and a dash of hot sauce (zero-cal). Stir-fry in 5g olive oil. Serve over rice (125g) with steamed vegetables.",
+            Fresh: "Lemon-Herb Chicken Bowl: Grill or pan-fry chicken (225g). Mix 5g olive oil with lemon juice, dried oregano, and parsley. Pour over warm rice (125g) and steamed vegetables.",
+        },
+        M3: { // Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil
+            Savory: "Pork & Thyme Mash: Brown pork mince (225g) in 5g olive oil with dried thyme and a tiny bit of bouillon powder. Serve alongside steamed or mashed baby potatoes (320g) and green veg (100g).",
+            Spicy: "Spicy Mince Tacos (Bowl): Brown mince (225g) in 5g olive oil with chili powder, cumin, and a dash of cayenne. Slice or cube the potatoes (320g) and roast/boil. Mix the potatoes, mince, and green veg (100g) in a bowl.",
+            Fresh: "Pork Mince Skewers & Potatoes: Mix mince (225g) with dried mint, lemon zest, and a pinch of salt. Form into small patties or skewers and cook in 5g olive oil. Serve with boiled potatoes (320g) and grilled asparagus (100g).",
+        },
+    };
+
+    function generateRecipe() {
+        const meal = document.getElementById('meal-selection').value;
+        const flavor = document.getElementById('flavor-selection').value;
+        const outputDiv = document.getElementById('recipe-output');
+
+        if (meal && flavor) {
+            const recipeText = recipes[meal][flavor];
+            outputDiv.innerHTML = `<h4>Your Custom Recipe:</h4><p>**${flavor} ${meal} Idea:** ${recipeText}</p>`;
+        } else {
+            outputDiv.innerHTML = '<h4>Your Custom Recipe:</h4><p>Select both a meal and a flavor to generate a recipe idea!</p>';
+        }
+    }
+        </div>
+    </div>
     </script>
 </div>
 
 </body>
 </html>
+

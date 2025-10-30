@@ -46,6 +46,37 @@
             margin-left: 10px;
             font-weight: bold;
         }
+
+        /* Progress Bar Styling */
+        #progress-tracker {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #d1e7dd;
+            border: 1px solid #a3cfb6;
+            border-radius: 8px;
+        }
+        .week-checkbox {
+            margin: 5px;
+        }
+        #progress-bar-container {
+            height: 25px;
+            background-color: #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #28a745; /* Green */
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s ease-in-out;
+        }
+
         /* Workout Table Styling */
         .workout-day table {
             width: 100%;
@@ -67,29 +98,28 @@
             border: 1px solid #ccc;
             border-radius: 3px;
         }
-        /* Progress Bar Styling */
-        #progress-tracker {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #d1e7dd;
-            border: 1px solid #a3cfb6;
-            border-radius: 8px;
-        }
-        .week-checkbox {
-            margin: 5px;
-        }
-   /* New Meal Generator Styles */
+        
+        /* New Generator Styles */
         .generator-section {
             padding: 20px;
-            background-color: #e0f7fa; /* Light blue background for emphasis */
-            border: 2px solid #00bcd4;
             border-radius: 8px;
             margin-top: 30px;
         }
+        .meal-generator-1 {
+            background-color: #fff3e0; /* Light orange for meal 1 */
+            border: 2px solid #ff9800;
+        }
+        .meal-generator-2 {
+            background-color: #e0f7fa; /* Light blue for meals 2/3 */
+            border: 2px solid #00bcd4;
+        }
+        .meal-generator-3 {
+            background-color: #f3e5f5; /* Light purple for meal 4 */
+            border: 2px solid #9c27b0;
+        }
         .generator-section h2 {
-            color: #00bcd4;
-            border-bottom: 2px solid #00bcd4;
+            color: inherit;
+            border-bottom: 2px solid inherit;
         }
         .meal-prompt {
             margin-bottom: 15px;
@@ -102,18 +132,27 @@
             width: 100%;
             margin-top: 5px;
         }
-        #recipe-output {
+        #recipe-output, #meal1-output, #meal4-output {
             margin-top: 20px;
             padding: 15px;
-            border: 1px dashed #00bcd4;
+            border: 1px dashed #757575;
             background-color: #ffffff;
             border-radius: 5px;
-            min-height: 80px; /* Ensures space even when empty */
+            min-height: 80px;
         }
-        #recipe-output h4 {
-            color: #2c3e50;
-            margin-top: 0;
-        } 
+
+        /* Chart Styling */
+        #progress-chart {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #3498db;
+            background-color: #e8f5e9;
+            border-radius: 6px;
+        }
+        #progress-chart pre {
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
@@ -124,185 +163,45 @@
     <h2>🗓️ 12-Week Progress Tracker</h2>
     <div id="progress-tracker">
         <p>Check off each week as you complete it:</p>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
         </div>
+        <div id="week-checkboxes">
+            </div>
+    </div>
 
     <h2>🍎 Daily Nutrition Checklist</h2>
-    <p>Check off each meal once you've eaten it. Try to use one of the variety options today!</p>
+    <p>Check off each meal once you've eaten it. Use the generators below for variety!</p>
     <div class="meal-section" id="meal-list">
         </div>
 
-    <h2>🏋️ Daily Workout Plan (Adjustable)</h2>
-
-    <div class="workout-day">
-        <h3>Monday (Day 1) - Chest & Triceps</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Exercise</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Weight (kg)</th>
-                    <th>Rest (s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Dumbbell Incline bench press</td><td><input type="text" value="4"></td><td><input type="text" value="8-10"></td><td><input type="text" value="12.5"></td><td>90</td></tr>
-                <tr><td>Dumbbell standing shoulder press</td><td><input type="text" value="4"></td><td><input type="text" value="6-8"></td><td><input type="text" value="12.5"></td><td>90</td></tr>
-                <tr><td>Cable bent over chest fly</td><td><input type="text" value="3"></td><td><input type="text" value="10-12"></td><td><input type="text" value="40"></td><td>90</td></tr>
-                <tr><td>Cuffed lateral raises</td><td><input type="text" value="3"></td><td><input type="text" value="15-20"></td><td><input type="text" value="15"></td><td>90</td></tr>
-                <tr><td>Cable straight bar triceps pushdown</td><td><input type="text" value="3"></td><td><input type="text" value="12-15"></td><td><input type="text" value="40"></td><td>90</td></tr>
-                <tr><td>Cable standing overhead triceps extension</td><td><input type="text" value="3"></td><td><input type="text" value="15-20"></td><td><input type="text" value="20"></td><td>90</td></tr>
-                <tr><td colspan="5">**Abdominal Circuit** (3 Rounds): Elbow plank (3-60s) / Cable kneeling crunch (15-20 reps) / Lying straight leg raise (15-20 reps) / Rest 60s</td></tr>
-            </tbody>
-        </table>
+    <div class="generator-section meal-generator-1">
+        <h2>🥚 Meal 1 (Eggs & Toast) Variety</h2>
+        <div class="meal-prompt">
+            <label for="meal1-prep">How do you want your eggs?</label>
+            <select id="meal1-prep" onchange="generateMeal1()">
+                <option value="">-- Select Prep Style --</option>
+                <option value="Scramble">Scrambled</option>
+                <option value="FrenchToast">Sweet French Toast</option>
+                <option value="SavoryToast">Savory Topping</option>
+            </select>
+        </div>
+        <div id="meal1-output">
+            <h4>Your Meal 1 Idea:</h4>
+            <p>Select a prep style to generate a recipe idea!</p>
+        </div>
     </div>
 
-    <div class="workout-day">
-        <h3>Wednesday (Day 3) - Back & Biceps</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Exercise</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Weight (kg)</th>
-                    <th>Rest (s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Lat Machine wide grip pulldown</td><td><input type="text" value="4"></td><td><input type="text" value="10-12"></td><td><input type="text" value="50"></td><td>90</td></tr>
-                <tr><td>Barbell bent over row</td><td><input type="text" value="4"></td><td><input type="text" value="5-8"></td><td><input type="text" value="40"></td><td>90</td></tr>
-                <tr><td>Cable seated row</td><td><input type="text" value="4"></td><td><input type="text" value="10-12"></td><td><input type="text" value="35"></td><td>90</td></tr>
-                <tr><td>Barbell shrug</td><td><input type="text" value="2"></td><td><input type="text" value="12-15"></td><td><input type="text" value="30"></td><td>90</td></tr>
-                <tr><td>Barbell bicep curl</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="15"></td><td>90</td></tr>
-                <tr><td>Cable single arm bicep curl</td><td><input type="text" value="2"></td><td><input type="text" value="15-20"></td><td><input type="text" value="20"></td><td>90</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="workout-day">
-        <h3>Friday (Day 5) - Legs & Abs + Cardio</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Exercise</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Weight (kg)</th>
-                    <th>Rest (s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Machine seated leg curl</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="45"></td><td>90</td></tr>
-                <tr><td>Hack Squats</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="55"></td><td>90</td></tr>
-                <tr><td>Seated leg press</td><td><input type="text" value="4"></td><td><input type="text" value="15-20"></td><td><input type="text" value="55"></td><td>90</td></tr>
-                <tr><td>Barbell romanian deadlift</td><td><input type="text" value="2"></td><td><input type="text" value="10-15"></td><td><input type="text" value="20"></td><td>90</td></tr>
-                <tr><td>Machine seated calf raise</td><td><input type="text" value="4"></td><td><input type="text" value="10-15"></td><td><input type="text" value="30"></td><td>90</td></tr>
-                <tr><td>Dumbbell walking lunge</td><td><input type="text" value="1"></td><td><input type="text" value="Until Failure"></td><td><input type="text" value="10"></td><td>-</td></tr>
-                <tr><td colspan="5">**Abdominal Circuit** (3 Rounds): Elbow plank (3-60s) / Cable kneeling crunch (15-20 reps) / Lying straight leg raise (15-20 reps) / Rest 60s</td></tr>
-                <tr><td colspan="5">**30 minutes Cardio** (Bike, jog, swim etc.)</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="workout-day">
-        <h3>Saturday (Day 6) - Arms Focus</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Exercise</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Weight (kg)</th>
-                    <th>Rest (s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Crossbody hammer curls</td><td><input type="text" value="3"></td><td><input type="text" value="10-15"></td><td><input type="text" value="10"></td><td>60</td></tr>
-                <tr><td>EZ Bar preacher curl</td><td><input type="text" value="3"></td><td><input type="text" value="8-10"></td><td><input type="text" value="10"></td><td>60</td></tr>
-                <tr><td>Barbell bicep curl</td><td><input type="text" value="2"></td><td><input type="text" value="8"></td><td><input type="text" value="17.5"></td><td>60</td></tr>
-                <tr><td>Cable rope triceps extension</td><td><input type="text" value="4"></td><td><input type="text" value="12"></td><td><input type="text" value="40"></td><td>60</td></tr>
-                <tr><td>Plate weighted dip</td><td><input type="text" value="3"></td><td><input type="text" value="8-12"></td><td><input type="text" value="Body Weight"></td><td>60</td></tr>
-                <tr><td>Cable standing overhead triceps extension</td><td><input type="text" value="3"></td><td><input type="text" value="15-20"></td><td><input type="text" value="20"></td><td>60</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <script>
-        // List of meals
-        const meals = [
-            "Meal 1: Sourdough, Cheese, Eggs, Banana",
-            "Meal 2: Chicken, Rice, Veg, Olive Oil",
-            "Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil",
-            "Meal 4: Oats, Whey Protein, Chocolate, Blueberries"
-        ];
-        
-        const mealListDiv = document.getElementById('meal-list');
-
-        // Dynamically create meal checkboxes
-        meals.forEach((meal, index) => {
-            const mealItem = document.createElement('div');
-            mealItem.className = 'meal-item';
-            
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = `meal-${index}`;
-            // Load state from local storage (so it remembers your checks)
-            checkbox.checked = localStorage.getItem(`meal-${index}`) === 'true';
-
-            // Save state when clicked
-            checkbox.addEventListener('change', (e) => {
-                localStorage.setItem(`meal-${index}`, e.target.checked);
-            });
-
-            const label = document.createElement('label');
-            label.htmlFor = `meal-${index}`;
-            label.textContent = meal;
-
-            mealItem.appendChild(checkbox);
-            mealItem.appendChild(label);
-            mealListDiv.appendChild(mealItem);
-        });
-
-        // 12-Week Progress Checkboxes
-        const progressTrackerDiv = document.getElementById('progress-tracker');
-        for (let i = 1; i <= 12; i++) {
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.className = 'week-checkbox';
-            checkbox.id = `week-${i}`;
-            checkbox.checked = localStorage.getItem(`week-${i}`) === 'true';
-            
-            checkbox.addEventListener('change', (e) => {
-                localStorage.setItem(`week-${i}`, e.target.checked);
-            });
-
-            const label = document.createElement('label');
-            label.htmlFor = `week-${i}`;
-            label.textContent = `Week ${i}`;
-
-            progressTrackerDiv.appendChild(checkbox);
-            progressTrackerDiv.appendChild(label);
-            // Add a line break every 4 weeks for better display
-            if (i % 4 === 0 && i !== 12) {
-                progressTrackerDiv.appendChild(document.createElement('br'));
-            }
-        }
-
-        // NOTE on Workout Inputs: The weight/set/rep inputs are saved *only* if you don't close the browser window. 
-        // For permanent saving across sessions, you would need more advanced JavaScript.
-        <div class="generator-section">
-        <h2>🍜 Meal Variety Generator</h2>
-
+    <div class="generator-section meal-generator-2">
+        <h2>🍜 Meal 2 & 3 (Chicken/Pork) Variety</h2>
         <div class="meal-prompt">
             <label for="meal-selection">Which meal are you planning?</label>
             <select id="meal-selection" onchange="generateRecipe()">
                 <option value="">-- Select a Meal --</option>
-                <option value="M2">Meal 2 (Chicken)</option>
-                <option value="M3">Meal 3 (Pork Mince)</option>
+                <option value="M2">Meal 2 (Chicken & Rice)</option>
+                <option value="M3">Meal 3 (Pork Mince & Potato)</option>
             </select>
         </div>
-
         <div class="meal-prompt">
             <label for="flavor-selection">What flavor are you craving?</label>
             <select id="flavor-selection" onchange="generateRecipe()">
@@ -312,41 +211,367 @@
                 <option value="Fresh">Fresh / Herby / Zesty</option>
             </select>
         </div>
-
         <div id="recipe-output">
             <h4>Your Custom Recipe:</h4>
             <p>Select a meal and a flavor to generate a recipe idea!</p>
-            // --- Meal Variety Logic ---
-    const recipes = {
-        M2: { // Meal 2: Chicken, Rice, Veg, Olive Oil
-            Savory: "Chicken Fried Rice: Fry diced chicken (225g) with garlic, onion powder, and 5g olive oil. Add cooked rice (125g) and vegetables (60kcal). Stir-fry until heated and well-seasoned.",
-            Spicy: "Spicy Chicken Stir-fry: Cube chicken (225g) and coat in chili powder, paprika, and a dash of hot sauce (zero-cal). Stir-fry in 5g olive oil. Serve over rice (125g) with steamed vegetables.",
-            Fresh: "Lemon-Herb Chicken Bowl: Grill or pan-fry chicken (225g). Mix 5g olive oil with lemon juice, dried oregano, and parsley. Pour over warm rice (125g) and steamed vegetables.",
-        },
-        M3: { // Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil
-            Savory: "Pork & Thyme Mash: Brown pork mince (225g) in 5g olive oil with dried thyme and a tiny bit of bouillon powder. Serve alongside steamed or mashed baby potatoes (320g) and green veg (100g).",
-            Spicy: "Spicy Mince Tacos (Bowl): Brown mince (225g) in 5g olive oil with chili powder, cumin, and a dash of cayenne. Slice or cube the potatoes (320g) and roast/boil. Mix the potatoes, mince, and green veg (100g) in a bowl.",
-            Fresh: "Pork Mince Skewers & Potatoes: Mix mince (225g) with dried mint, lemon zest, and a pinch of salt. Form into small patties or skewers and cook in 5g olive oil. Serve with boiled potatoes (320g) and grilled asparagus (100g).",
-        },
-    };
-
-    function generateRecipe() {
-        const meal = document.getElementById('meal-selection').value;
-        const flavor = document.getElementById('flavor-selection').value;
-        const outputDiv = document.getElementById('recipe-output');
-
-        if (meal && flavor) {
-            const recipeText = recipes[meal][flavor];
-            outputDiv.innerHTML = `<h4>Your Custom Recipe:</h4><p>**${flavor} ${meal} Idea:** ${recipeText}</p>`;
-        } else {
-            outputDiv.innerHTML = '<h4>Your Custom Recipe:</h4><p>Select both a meal and a flavor to generate a recipe idea!</p>';
-        }
-    }
         </div>
     </div>
+
+    <div class="generator-section meal-generator-3">
+        <h2>🥣 Meal 4 (Protein Oats) Variety</h2>
+        <div class="meal-prompt">
+            <label for="meal4-texture">What temperature/texture are you craving?</label>
+            <select id="meal4-texture" onchange="generateMeal4()">
+                <option value="">-- Select a Texture --</option>
+                <option value="Hot">Hot / Cooked</option>
+                <option value="Cold">Cold / Overnight</option>
+                <option value="Baked">Baked / Cake-like</option>
+            </select>
+        </div>
+        <div id="meal4-output">
+            <h4>Your Meal 4 Idea:</h4>
+            <p>Select a temperature/texture to generate your protein oats!</p>
+        </div>
+    </div>
+
+    <h2>🏋️ Daily Workout Plan (Adjustable)</h2>
+
+    <div class="workout-day">
+        <h3>Monday (Day 1) - Chest & Triceps</h3>
+        <table>
+            <thead>
+                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+            </thead>
+            <tbody id="Mon-table">
+                </tbody>
+        </table>
+    </div>
+
+    <div class="workout-day">
+        <h3>Wednesday (Day 3) - Back & Biceps</h3>
+        <table>
+            <thead>
+                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+            </thead>
+            <tbody id="Wed-table">
+                 </tbody>
+        </table>
+    </div>
+
+    <div class="workout-day">
+        <h3>Friday (Day 5) - Legs & Abs + Cardio</h3>
+        <table>
+            <thead>
+                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+            </thead>
+            <tbody id="Fri-table">
+                 </tbody>
+        </table>
+    </div>
+
+    <div class="workout-day">
+        <h3>Saturday (Day 6) - Arms Focus</h3>
+        <table>
+            <thead>
+                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+            </thead>
+            <tbody id="Sat-table">
+                 </tbody>
+        </table>
+    </div>
+    
+    <h2>📈 Workout Progression Chart (Previous Week)</h2>
+    <div id="progress-chart">
+        <p>This chart will compare your **current** planned weights/sets/reps to the **last time** you completed this workout.</p>
+        <div id="chart-output">
+            <p>Complete a workout and update your inputs to see a comparison here!</p>
+            <button onclick="compareWorkouts()">Show Last Week's Progression</button>
+        </div>
+    </div>
+
+
+    <script>
+        // --- DATA SETUP ---
+        const MEALS = [
+            "Meal 1: Sourdough, Cheese, Eggs, Banana",
+            "Meal 2: Chicken, Rice, Veg, Olive Oil",
+            "Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil",
+            "Meal 4: Oats, Whey Protein, Chocolate, Blueberries"
+        ];
+        
+        const WORKOUT_DATA = {
+            Mon: [
+                { name: "Dumbbell Incline bench press", sets: "4", reps: "8-10", weight: "12.5", rest: 90 },
+                { name: "Dumbbell standing shoulder press", sets: "4", reps: "6-8", weight: "12.5", rest: 90 },
+                { name: "Cable bent over chest fly", sets: "3", reps: "10-12", weight: "40", rest: 90 },
+                { name: "Cuffed lateral raises", sets: "3", reps: "15-20", weight: "15", rest: 90 },
+                { name: "Cable straight bar triceps pushdown", sets: "3", reps: "12-15", weight: "40", rest: 90 },
+                { name: "Cable standing overhead triceps extension", sets: "3", reps: "15-20", weight: "20", rest: 90 },
+                { name: "Abdominal Circuit (3 Rounds)", sets: "3", reps: "15-20/60s", weight: "BW/Cable", rest: 60 }
+            ],
+            Wed: [
+                { name: "Lat Machine wide grip pulldown", sets: "4", reps: "10-12", weight: "50", rest: 90 },
+                { name: "Barbell bent over row", sets: "4", reps: "5-8", weight: "40", rest: 90 },
+                { name: "Cable seated row", sets: "4", reps: "10-12", weight: "35", rest: 90 },
+                { name: "Barbell shrug", sets: "2", reps: "12-15", weight: "30", rest: 90 },
+                { name: "Barbell bicep curl", sets: "3", reps: "10-15", weight: "15", rest: 90 },
+                { name: "Cable single arm bicep curl", sets: "2", reps: "15-20", weight: "20", rest: 90 }
+            ],
+            Fri: [
+                { name: "Machine seated leg curl", sets: "3", reps: "10-15", weight: "45", rest: 90 },
+                { name: "Hack Squats", sets: "3", reps: "10-15", weight: "55", rest: 90 },
+                { name: "seated leg press", sets: "4", reps: "15-20", weight: "55", rest: 90 },
+                { name: "Barbell romanian deadlift", sets: "2", reps: "10-15", weight: "20", rest: 90 },
+                { name: "Machine seated calf raise", sets: "4", reps: "10-15", weight: "30", rest: 90 },
+                { name: "Dumbbell walking lunge", sets: "1", reps: "Until Failure", weight: "10", rest: "-" },
+                { name: "Abdominal Circuit (3 Rounds) + 30 mins Cardio", sets: "3", reps: "15-20/60s", weight: "BW/Cable", rest: 60 }
+            ],
+            Sat: [
+                { name: "Crossbody hammer curls", sets: "3", reps: "10-15", weight: "10", rest: 60 },
+                { name: "EZ Bar preacher curl", sets: "3", reps: "8-10", weight: "10", rest: 60 },
+                { name: "Barbell bicep curl", sets: "2", reps: "8", weight: "17.5", rest: 60 },
+                { name: "Cable rope triceps extension", sets: "4", reps: "12", weight: "40", rest: 60 },
+                { name: "Plate weighted dip", sets: "3", reps: "8-12", weight: "Body Weight", rest: 60 },
+                { name: "Cable standing overhead triceps extension", sets: "3", reps: "15-20", weight: "20", rest: 60 }
+            ]
+        };
+        
+        // --- INITIALIZATION AND WEEKLY PROGRESS ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init Checklists
+            initMealChecklist();
+            initWeekCheckboxes();
+            
+            // Init Workout Tables
+            initWorkoutTable('Mon', WORKOUT_DATA.Mon);
+            initWorkoutTable('Wed', WORKOUT_DATA.Wed);
+            initWorkoutTable('Fri', WORKOUT_DATA.Fri);
+            initWorkoutTable('Sat', WORKOUT_DATA.Sat);
+        });
+
+        function initMealChecklist() {
+            const mealListDiv = document.getElementById('meal-list');
+            MEALS.forEach((meal, index) => {
+                const mealItem = document.createElement('div');
+                mealItem.className = 'meal-item';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `meal-${index}`;
+                checkbox.checked = localStorage.getItem(`meal-${index}`) === 'true';
+
+                checkbox.addEventListener('change', (e) => {
+                    localStorage.setItem(`meal-${index}`, e.target.checked);
+                });
+
+                const label = document.createElement('label');
+                label.htmlFor = `meal-${index}`;
+                label.textContent = meal;
+
+                mealItem.appendChild(checkbox);
+                mealItem.appendChild(label);
+                mealListDiv.appendChild(mealItem);
+            });
+        }
+
+        function initWeekCheckboxes() {
+            const progressDiv = document.getElementById('week-checkboxes');
+            let completedWeeks = 0;
+            for (let i = 1; i <= 12; i++) {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'week-checkbox';
+                checkbox.id = `week-${i}`;
+                checkbox.checked = localStorage.getItem(`week-${i}`) === 'true';
+                
+                if (checkbox.checked) completedWeeks++;
+
+                checkbox.addEventListener('change', (e) => {
+                    localStorage.setItem(`week-${i}`, e.target.checked);
+                    updateProgressBar();
+                });
+
+                const label = document.createElement('label');
+                label.htmlFor = `week-${i}`;
+                label.textContent = `Week ${i}`;
+
+                progressDiv.appendChild(checkbox);
+                progressDiv.appendChild(label);
+                if (i % 4 === 0 && i !== 12) {
+                    progressDiv.appendChild(document.createElement('br'));
+                }
+            }
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const totalWeeks = 12;
+            const completedWeeks = Array.from(document.querySelectorAll('.week-checkbox')).filter(cb => cb.checked).length;
+            const percentage = (completedWeeks / totalWeeks) * 100;
+
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${percentage}%`;
+            progressBar.textContent = `${completedWeeks} / 12 Weeks (${Math.round(percentage)}%)`;
+        }
+
+        // --- WORKOUT TABLE LOGIC ---
+
+        function initWorkoutTable(day, data) {
+            const tableBody = document.getElementById(`${day}-table`);
+            data.forEach((exercise, index) => {
+                const row = tableBody.insertRow();
+                const id = `${day}-${index}`;
+
+                row.insertCell().textContent = exercise.name;
+                
+                // Sets
+                row.insertCell().innerHTML = `<input type="text" value="${localStorage.getItem(`${id}-sets`) || exercise.sets}" id="${id}-sets" onchange="saveWorkoutData(this, '${id}-sets')">`;
+                
+                // Reps
+                row.insertCell().innerHTML = `<input type="text" value="${localStorage.getItem(`${id}-reps`) || exercise.reps}" id="${id}-reps" onchange="saveWorkoutData(this, '${id}-reps')">`;
+                
+                // Weight
+                row.insertCell().innerHTML = `<input type="text" value="${localStorage.getItem(`${id}-weight`) || exercise.weight}" id="${id}-weight" onchange="saveWorkoutData(this, '${id}-weight')">`;
+                
+                // Rest
+                row.insertCell().textContent = exercise.rest;
+            });
+        }
+
+        function saveWorkoutData(inputElement, key) {
+            // Before saving, save the *old* value as "last week" data
+            const lastWeekKey = key.replace(/-/g, '_') + '_last';
+            
+            // If there's an existing current value, save it to last week
+            const currentValue = localStorage.getItem(key);
+            if (currentValue) {
+                 localStorage.setItem(lastWeekKey, currentValue);
+            }
+            
+            // Save the new value
+            localStorage.setItem(key, inputElement.value);
+        }
+
+        // --- PROGRESSION CHART LOGIC ---
+
+        function compareWorkouts() {
+            const chartOutput = document.getElementById('chart-output');
+            let outputText = 'Day | Exercise | Sets | Reps | Weight\n';
+            outputText += '----|----------|------|------|--------\n';
+            
+            ['Mon', 'Wed', 'Fri', 'Sat'].forEach(day => {
+                const data = WORKOUT_DATA[day];
+                data.forEach((exercise, index) => {
+                    const id = `${day}-${index}`;
+                    const keys = ['sets', 'reps', 'weight'];
+                    let rowText = `${day} | ${exercise.name} |`;
+
+                    let progressMade = false;
+                    keys.forEach(key => {
+                        const currentKey = `${id}-${key}`;
+                        const lastKey = currentKey.replace(/-/g, '_') + '_last';
+
+                        const current = localStorage.getItem(currentKey) || exercise[key];
+                        const last = localStorage.getItem(lastKey) || exercise[key];
+                        
+                        let displayValue = current;
+
+                        // Simple numeric comparison for progress tracking
+                        if (!isNaN(parseFloat(current)) && !isNaN(parseFloat(last))) {
+                            const currentNum = parseFloat(current);
+                            const lastNum = parseFloat(last);
+
+                            if (currentNum > lastNum) {
+                                displayValue = `${current} ▲`; // Improved
+                                progressMade = true;
+                            } else if (currentNum < lastNum) {
+                                displayValue = `${current} ▼`; // Decreased
+                            }
+                        } else if (current !== last && current.toLowerCase() !== last.toLowerCase()) {
+                            // Non-numeric change (e.g. from "10" to "10-12") is considered a change
+                            displayValue = `${current} *`;
+                        }
+
+                        rowText += ` ${displayValue} |`;
+                    });
+
+                    // Only show rows that had an improvement (▲) or are a core lift
+                    if (progressMade || index < 2) { 
+                        outputText += rowText + '\n';
+                    }
+                });
+            });
+
+            chartOutput.innerHTML = `<h4>Current Workout Progression (Compared to last entry):</h4><pre>${outputText}</pre><p>Legend: ▲ Improved / * Changed / ▼ Decreased</p>`;
+        }
+
+
+        // --- MEAL GENERATOR LOGIC ---
+
+        const MEAL1_RECIPES = {
+            Scramble: "Savory Breakfast Sandwich: Scramble the egg whites (275g) and whole eggs (3) with pepper. Spread the Philadelphia (30g) on the toasted sourdough (50g). Top with the creamy eggs. Eat banana (100g) on the side.",
+            FrenchToast: "Sweet Protein Toast: Mix eggs/whites with cinnamon and a splash of water. Dip the sourdough (50g) and cook. Use Philadelphia (30g) as a creamy topping, then slice the banana (100g) over the top.",
+            SavoryToast: "Savory & Zesty Eggs: Slice the hard-boiled whole eggs (3) and mix the egg whites (275g) into the Philadelphia (30g) for a spread. Add pepper and a dash of cayenne. Spread on sourdough (50g). Eat banana (100g) separate.",
+        };
+        
+        const MEAL2_3_RECIPES = {
+            M2: { // Meal 2: Chicken, Rice, Veg, Olive Oil
+                Savory: "Chicken Fried Rice: Fry diced chicken (225g) with garlic, onion powder, and 5g **olive oil**. Add cooked rice (125g) and vegetables (60kcal). Stir-fry until heated.",
+                Spicy: "Spicy Chicken Stir-fry: Cube chicken (225g) and coat in chili powder, paprika, and a dash of hot sauce (zero-cal). Stir-fry in 5g **olive oil**. Serve over rice (125g) with steamed vegetables.",
+                Fresh: "Lemon-Herb Chicken Bowl: Grill chicken (225g). Mix 5g **olive oil** with lemon juice, oregano, and parsley. Pour over warm rice (125g) and steamed vegetables.",
+            },
+            M3: { // Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil
+                Savory: "Pork & Thyme Mash: Brown pork mince (225g) in 5g **olive oil** with dried thyme and a tiny bit of bouillon powder. Serve alongside steamed or mashed baby potatoes (320g) and green veg (100g).",
+                Spicy: "Spicy Mince Tacos (Bowl): Brown mince (225g) in 5g **olive oil** with chili powder, cumin, and a dash of cayenne. Cube the potatoes (320g). Mix the potatoes, mince, and green veg (100g) in a bowl.",
+                Fresh: "Pork Mince Skewers & Potatoes: Mix mince (225g) with dried mint and lemon zest. Cook in 5g **olive oil**. Serve with boiled potatoes (320g) and grilled asparagus (100g).",
+            },
+        };
+
+        const MEAL4_RECIPES = {
+            Hot: "Warm Protein Oats: Combine oats (80g) and water/milk. Microwave/cook until done. Mix in whey protein (50g) **after** cooking. Top with frozen blueberries (100g) and dark chocolate (20g).",
+            Cold: "Overnight Oats: The night before, mix oats (80g), whey protein (50g), and water/milk. Refrigerate. In the morning, top with frozen blueberries (100g) and dark chocolate (20g).",
+            Baked: "Protein Baked Oats: Blend oats (80g) until flour-like. Mix with whey protein (50g), water/milk, and baking powder. Stir in blueberries (100g). Bake/microwave until set. Melt dark chocolate (20g) on top.",
+        };
+
+        function generateMeal1() {
+            const prep = document.getElementById('meal1-prep').value;
+            const outputDiv = document.getElementById('meal1-output');
+
+            if (prep) {
+                const recipeText = MEAL1_RECIPES[prep];
+                outputDiv.innerHTML = `<h4>Your Meal 1 Idea:</h4><p>**${prep} Style:** ${recipeText}</p>`;
+            } else {
+                outputDiv.innerHTML = '<h4>Your Meal 1 Idea:</h4><p>Select a prep style to generate a recipe idea!</p>';
+            }
+        }
+        
+        function generateRecipe() {
+            const meal = document.getElementById('meal-selection').value;
+            const flavor = document.getElementById('flavor-selection').value;
+            const outputDiv = document.getElementById('recipe-output');
+
+            if (meal && flavor) {
+                const recipeText = MEAL2_3_RECIPES[meal][flavor];
+                outputDiv.innerHTML = `<h4>Your Custom Recipe:</h4><p>**${flavor} ${meal} Idea:** ${recipeText}</p>`;
+            } else {
+                outputDiv.innerHTML = '<h4>Your Custom Recipe:</h4><p>Select both a meal and a flavor to generate a recipe idea!</p>';
+            }
+        }
+
+        function generateMeal4() {
+            const texture = document.getElementById('meal4-texture').value;
+            const outputDiv = document.getElementById('meal4-output');
+
+            if (texture) {
+                const recipeText = MEAL4_RECIPES[texture];
+                outputDiv.innerHTML = `<h4>Your Meal 4 Idea:</h4><p>**${texture} Style:** ${recipeText}</p>`;
+            } else {
+                outputDiv.innerHTML = '<h4>Your Meal 4 Idea:</h4><p>Select a temperature/texture to generate your protein oats!</p>';
+            }
+        }
     </script>
 </div>
 
 </body>
 </html>
-

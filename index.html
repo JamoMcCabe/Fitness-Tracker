@@ -30,23 +30,42 @@
             margin-top: 30px;
             color: #3498db;
         }
-        .meal-section, .workout-day {
+        .workout-day {
             margin-bottom: 20px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 6px;
             background-color: #ecf0f1;
         }
-        .meal-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        .meal-item label {
-            margin-left: 10px;
-            font-weight: bold;
-        }
 
+        /* Responsive Table Fix: Wraps the table and allows horizontal scroll on small screens */
+        .table-responsive {
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch;
+        }
+        .workout-day table {
+            width: 100%;
+            min-width: 600px; /* Forces a minimum width to enable scrolling */
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .workout-day th, .workout-day td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        .workout-day th {
+            background-color: #3498db;
+            color: white;
+            white-space: nowrap;
+        }
+        .workout-day input[type="text"] {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
         /* Progress Bar Styling */
         #progress-tracker {
             text-align: center;
@@ -77,44 +96,22 @@
             transition: width 0.5s ease-in-out;
         }
 
-        /* Workout Table Styling */
-        .workout-day table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        .workout-day th, .workout-day td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-        .workout-day th {
-            background-color: #3498db;
-            color: white;
-        }
-        .workout-day input[type="text"] {
-            width: 80px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        
-        /* New Generator Styles */
+        /* Generator Styles */
         .generator-section {
             padding: 20px;
             border-radius: 8px;
             margin-top: 30px;
         }
         .meal-generator-1 {
-            background-color: #fff3e0; /* Light orange for meal 1 */
+            background-color: #fff3e0; 
             border: 2px solid #ff9800;
         }
         .meal-generator-2 {
-            background-color: #e0f7fa; /* Light blue for meals 2/3 */
+            background-color: #e0f7fa; 
             border: 2px solid #00bcd4;
         }
         .meal-generator-3 {
-            background-color: #f3e5f5; /* Light purple for meal 4 */
+            background-color: #f3e5f5; 
             border: 2px solid #9c27b0;
         }
         .generator-section h2 {
@@ -152,6 +149,12 @@
         #progress-chart pre {
             white-space: pre-wrap;
             font-family: monospace;
+            overflow-x: auto; /* Ensures chart itself can scroll if too wide */
+        }
+        /* Highlight Ab Circuit for clarity */
+        .ab-circuit {
+            background-color: #f0f8ff; /* Light blue highlight */
+            font-style: italic;
         }
     </style>
 </head>
@@ -170,13 +173,9 @@
             </div>
     </div>
 
-    <h2>🍎 Daily Nutrition Checklist</h2>
-    <p>Check off each meal once you've eaten it. Use the generators below for variety!</p>
-    <div class="meal-section" id="meal-list">
-        </div>
-
     <div class="generator-section meal-generator-1">
-        <h2>🥚 Meal 1 (Eggs & Toast) Variety</h2>
+        <h2>🥚 Meal 1: Daily Variety (Eggs & Toast)</h2>
+        <p>Current Ingredients: Sourdough (50g), Philadelphia Lightest (30g), Egg Whites (275g), 3 Whole Eggs, Banana (100g)</p>
         <div class="meal-prompt">
             <label for="meal1-prep">How do you want your eggs?</label>
             <select id="meal1-prep" onchange="generateMeal1()">
@@ -193,7 +192,8 @@
     </div>
 
     <div class="generator-section meal-generator-2">
-        <h2>🍜 Meal 2 & 3 (Chicken/Pork) Variety</h2>
+        <h2>🍜 Meal 2 & 3: Daily Variety (Chicken/Pork)</h2>
+        <p>M2: Chicken (225g), Rice (125g cooked), Veg (60kcal), Olive oil (5g) | M3: Pork (225g), Potatoes (320g), Green Veg (100g), Olive oil (5g)</p>
         <div class="meal-prompt">
             <label for="meal-selection">Which meal are you planning?</label>
             <select id="meal-selection" onchange="generateRecipe()">
@@ -218,7 +218,8 @@
     </div>
 
     <div class="generator-section meal-generator-3">
-        <h2>🥣 Meal 4 (Protein Oats) Variety</h2>
+        <h2>🥣 Meal 4: Daily Variety (Protein Oats)</h2>
+        <p>Current Ingredients: Oats (80g), Whey Protein (50g), Dark Chocolate (20g), Frozen Blueberries (100g)</p>
         <div class="meal-prompt">
             <label for="meal4-texture">What temperature/texture are you craving?</label>
             <select id="meal4-texture" onchange="generateMeal4()">
@@ -235,69 +236,72 @@
     </div>
 
     <h2>🏋️ Daily Workout Plan (Adjustable)</h2>
+    <p>Use the input fields to track your sets, reps, and weight. **Scroll the table horizontally** on your iPhone to see all columns.</p>
 
     <div class="workout-day">
         <h3>Monday (Day 1) - Chest & Triceps</h3>
-        <table>
-            <thead>
-                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
-            </thead>
-            <tbody id="Mon-table">
-                </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+                </thead>
+                <tbody id="Mon-table">
+                    </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="workout-day">
         <h3>Wednesday (Day 3) - Back & Biceps</h3>
-        <table>
-            <thead>
-                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
-            </thead>
-            <tbody id="Wed-table">
-                 </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+                </thead>
+                <tbody id="Wed-table">
+                     </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="workout-day">
         <h3>Friday (Day 5) - Legs & Abs + Cardio</h3>
-        <table>
-            <thead>
-                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
-            </thead>
-            <tbody id="Fri-table">
-                 </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+                </thead>
+                <tbody id="Fri-table">
+                     </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="workout-day">
         <h3>Saturday (Day 6) - Arms Focus</h3>
-        <table>
-            <thead>
-                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
-            </thead>
-            <tbody id="Sat-table">
-                 </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight (kg)</th><th>Rest (s)</th></tr>
+                </thead>
+                <tbody id="Sat-table">
+                     </tbody>
+            </table>
+        </div>
     </div>
     
     <h2>📈 Workout Progression Chart (Previous Week)</h2>
     <div id="progress-chart">
-        <p>This chart will compare your **current** planned weights/sets/reps to the **last time** you completed this workout.</p>
+        <p>This chart compares your **current** planned stats to the **last time** you completed this workout. Click the button after a workout to update the comparison.</p>
         <div id="chart-output">
-            <p>Complete a workout and update your inputs to see a comparison here!</p>
             <button onclick="compareWorkouts()">Show Last Week's Progression</button>
+            <p>Complete a workout and update your inputs to see a comparison here!</p>
         </div>
     </div>
 
 
     <script>
         // --- DATA SETUP ---
-        const MEALS = [
-            "Meal 1: Sourdough, Cheese, Eggs, Banana",
-            "Meal 2: Chicken, Rice, Veg, Olive Oil",
-            "Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil",
-            "Meal 4: Oats, Whey Protein, Chocolate, Blueberries"
-        ];
         
         const WORKOUT_DATA = {
             Mon: [
@@ -307,7 +311,11 @@
                 { name: "Cuffed lateral raises", sets: "3", reps: "15-20", weight: "15", rest: 90 },
                 { name: "Cable straight bar triceps pushdown", sets: "3", reps: "12-15", weight: "40", rest: 90 },
                 { name: "Cable standing overhead triceps extension", sets: "3", reps: "15-20", weight: "20", rest: 90 },
-                { name: "Abdominal Circuit (3 Rounds)", sets: "3", reps: "15-20/60s", weight: "BW/Cable", rest: 60 }
+                // --- AB CIRCUIT START (3 Rounds, 60s rest after all 3 exercises) ---
+                { name: "CIRCUIT: Elbow plank", sets: "3", reps: "30-60s", weight: "BW", rest: "Cont." },
+                { name: "CIRCUIT: Cable kneeling Crunch", sets: "3", reps: "15-20", weight: "Cable", rest: "Cont." },
+                { name: "CIRCUIT: Lying straight leg raise", sets: "3", reps: "15-20", weight: "BW", rest: "60 (Circuit Rest)" }
+                // --- AB CIRCUIT END ---
             ],
             Wed: [
                 { name: "Lat Machine wide grip pulldown", sets: "4", reps: "10-12", weight: "50", rest: 90 },
@@ -320,11 +328,16 @@
             Fri: [
                 { name: "Machine seated leg curl", sets: "3", reps: "10-15", weight: "45", rest: 90 },
                 { name: "Hack Squats", sets: "3", reps: "10-15", weight: "55", rest: 90 },
-                { name: "seated leg press", sets: "4", reps: "15-20", weight: "55", rest: 90 },
+                { name: "Seated leg press", sets: "4", reps: "15-20", weight: "55", rest: 90 },
                 { name: "Barbell romanian deadlift", sets: "2", reps: "10-15", weight: "20", rest: 90 },
                 { name: "Machine seated calf raise", sets: "4", reps: "10-15", weight: "30", rest: 90 },
                 { name: "Dumbbell walking lunge", sets: "1", reps: "Until Failure", weight: "10", rest: "-" },
-                { name: "Abdominal Circuit (3 Rounds) + 30 mins Cardio", sets: "3", reps: "15-20/60s", weight: "BW/Cable", rest: 60 }
+                // --- AB CIRCUIT START (3 Rounds, 60s rest after all 3 exercises) ---
+                { name: "CIRCUIT: Elbow plank", sets: "3", reps: "30-60s", weight: "BW", rest: "Cont." },
+                { name: "CIRCUIT: Cable kneeling Crunch", sets: "3", reps: "15-20", weight: "Cable", rest: "Cont." },
+                { name: "CIRCUIT: Lying straight leg raise", sets: "3", reps: "15-20", weight: "BW", rest: "60 (Circuit Rest)" },
+                // --- AB CIRCUIT END ---
+                { name: "30 mins Cardio (Bike, jog, swim etc.)", sets: "1", reps: "30 mins", weight: "N/A", rest: "-" }
             ],
             Sat: [
                 { name: "Crossbody hammer curls", sets: "3", reps: "10-15", weight: "10", rest: 60 },
@@ -339,8 +352,6 @@
         // --- INITIALIZATION AND WEEKLY PROGRESS ---
         
         document.addEventListener('DOMContentLoaded', () => {
-            // Init Checklists
-            initMealChecklist();
             initWeekCheckboxes();
             
             // Init Workout Tables
@@ -349,31 +360,6 @@
             initWorkoutTable('Fri', WORKOUT_DATA.Fri);
             initWorkoutTable('Sat', WORKOUT_DATA.Sat);
         });
-
-        function initMealChecklist() {
-            const mealListDiv = document.getElementById('meal-list');
-            MEALS.forEach((meal, index) => {
-                const mealItem = document.createElement('div');
-                mealItem.className = 'meal-item';
-                
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = `meal-${index}`;
-                checkbox.checked = localStorage.getItem(`meal-${index}`) === 'true';
-
-                checkbox.addEventListener('change', (e) => {
-                    localStorage.setItem(`meal-${index}`, e.target.checked);
-                });
-
-                const label = document.createElement('label');
-                label.htmlFor = `meal-${index}`;
-                label.textContent = meal;
-
-                mealItem.appendChild(checkbox);
-                mealItem.appendChild(label);
-                mealListDiv.appendChild(mealItem);
-            });
-        }
 
         function initWeekCheckboxes() {
             const progressDiv = document.getElementById('week-checkboxes');
@@ -422,6 +408,12 @@
             data.forEach((exercise, index) => {
                 const row = tableBody.insertRow();
                 const id = `${day}-${index}`;
+                
+                // Add highlight class for circuit elements
+                if (exercise.name.includes("CIRCUIT:")) {
+                    row.classList.add('ab-circuit');
+                }
+
 
                 row.insertCell().textContent = exercise.name;
                 
@@ -489,49 +481,49 @@
                                 displayValue = `${current} ▼`; // Decreased
                             }
                         } else if (current !== last && current.toLowerCase() !== last.toLowerCase()) {
-                            // Non-numeric change (e.g. from "10" to "10-12") is considered a change
+                            // Non-numeric change
                             displayValue = `${current} *`;
                         }
 
                         rowText += ` ${displayValue} |`;
                     });
 
-                    // Only show rows that had an improvement (▲) or are a core lift
-                    if (progressMade || index < 2) { 
+                    // Only show rows that had an improvement (▲) or are a core lift/circuit element
+                    if (progressMade || index < 2 || exercise.name.includes("CIRCUIT:")) { 
                         outputText += rowText + '\n';
                     }
                 });
             });
 
-            chartOutput.innerHTML = `<h4>Current Workout Progression (Compared to last entry):</h4><pre>${outputText}</pre><p>Legend: ▲ Improved / * Changed / ▼ Decreased</p>`;
+            chartOutput.innerHTML = `<h4>Current Workout Progression (Compared to last entry):</h4><pre>${outputText}</pre><p>Legend: ▲ Improved / * Changed / ▼ Decreased</p><button onclick="compareWorkouts()">Show Last Week's Progression</button>`;
         }
 
 
         // --- MEAL GENERATOR LOGIC ---
 
         const MEAL1_RECIPES = {
-            Scramble: "Savory Breakfast Sandwich: Scramble the egg whites (275g) and whole eggs (3) with pepper. Spread the Philadelphia (30g) on the toasted sourdough (50g). Top with the creamy eggs. Eat banana (100g) on the side.",
-            FrenchToast: "Sweet Protein Toast: Mix eggs/whites with cinnamon and a splash of water. Dip the sourdough (50g) and cook. Use Philadelphia (30g) as a creamy topping, then slice the banana (100g) over the top.",
-            SavoryToast: "Savory & Zesty Eggs: Slice the hard-boiled whole eggs (3) and mix the egg whites (275g) into the Philadelphia (30g) for a spread. Add pepper and a dash of cayenne. Spread on sourdough (50g). Eat banana (100g) separate.",
+            Scramble: "Savory Breakfast Sandwich: Scramble the **egg whites (275g)** and **whole eggs (3)** with pepper. Spread the **Philadelphia (30g)** on the toasted **sourdough (50g)**. Top with the creamy eggs. Eat **banana (100g)** on the side.",
+            FrenchToast: "Sweet Protein Toast: Mix eggs/whites with cinnamon and a splash of water. Dip the **sourdough (50g)** and cook. Use **Philadelphia (30g)** as a creamy topping, then slice the **banana (100g)** over the top.",
+            SavoryToast: "Savory & Zesty Eggs: Slice the hard-boiled **whole eggs (3)**. Mix the **egg whites (275g)** into the **Philadelphia (30g)** for a spread. Add pepper and cayenne. Spread on **sourdough (50g)**. Eat **banana (100g)** separate.",
         };
         
         const MEAL2_3_RECIPES = {
-            M2: { // Meal 2: Chicken, Rice, Veg, Olive Oil
-                Savory: "Chicken Fried Rice: Fry diced chicken (225g) with garlic, onion powder, and 5g **olive oil**. Add cooked rice (125g) and vegetables (60kcal). Stir-fry until heated.",
-                Spicy: "Spicy Chicken Stir-fry: Cube chicken (225g) and coat in chili powder, paprika, and a dash of hot sauce (zero-cal). Stir-fry in 5g **olive oil**. Serve over rice (125g) with steamed vegetables.",
-                Fresh: "Lemon-Herb Chicken Bowl: Grill chicken (225g). Mix 5g **olive oil** with lemon juice, oregano, and parsley. Pour over warm rice (125g) and steamed vegetables.",
+            M2: { 
+                Savory: "Chicken Fried Rice: Fry diced **chicken (225g)** with garlic, onion powder, and **5g olive oil**. Add cooked **rice (125g)** and **vegetables (60kcal)**. Stir-fry until heated.",
+                Spicy: "Spicy Chicken Stir-fry: Cube **chicken (225g)** and coat in chili powder, paprika, and a dash of hot sauce (zero-cal). Stir-fry in **5g olive oil**. Serve over **rice (125g)** with steamed vegetables.",
+                Fresh: "Lemon-Herb Chicken Bowl: Grill **chicken (225g)**. Mix **5g olive oil** with lemon juice, oregano, and parsley. Pour over warm **rice (125g)** and steamed vegetables.",
             },
-            M3: { // Meal 3: Pork Mince, Potatoes, Asparagus/Green Veg, Olive Oil
-                Savory: "Pork & Thyme Mash: Brown pork mince (225g) in 5g **olive oil** with dried thyme and a tiny bit of bouillon powder. Serve alongside steamed or mashed baby potatoes (320g) and green veg (100g).",
-                Spicy: "Spicy Mince Tacos (Bowl): Brown mince (225g) in 5g **olive oil** with chili powder, cumin, and a dash of cayenne. Cube the potatoes (320g). Mix the potatoes, mince, and green veg (100g) in a bowl.",
-                Fresh: "Pork Mince Skewers & Potatoes: Mix mince (225g) with dried mint and lemon zest. Cook in 5g **olive oil**. Serve with boiled potatoes (320g) and grilled asparagus (100g).",
+            M3: { 
+                Savory: "Pork & Thyme Mash: Brown **pork mince (225g)** in **5g olive oil** with dried thyme. Serve alongside steamed or mashed **baby potatoes (320g)** and **green veg (100g)**.",
+                Spicy: "Spicy Mince Tacos (Bowl): Brown **mince (225g)** in **5g olive oil** with chili powder, cumin, and cayenne. Cube the **potatoes (320g)**. Mix the potatoes, mince, and **green veg (100g)** in a bowl.",
+                Fresh: "Pork Mince Skewers & Potatoes: Mix **mince (225g)** with dried mint and lemon zest. Cook in **5g olive oil**. Serve with boiled **potatoes (320g)** and grilled **asparagus (100g)**.",
             },
         };
 
         const MEAL4_RECIPES = {
-            Hot: "Warm Protein Oats: Combine oats (80g) and water/milk. Microwave/cook until done. Mix in whey protein (50g) **after** cooking. Top with frozen blueberries (100g) and dark chocolate (20g).",
-            Cold: "Overnight Oats: The night before, mix oats (80g), whey protein (50g), and water/milk. Refrigerate. In the morning, top with frozen blueberries (100g) and dark chocolate (20g).",
-            Baked: "Protein Baked Oats: Blend oats (80g) until flour-like. Mix with whey protein (50g), water/milk, and baking powder. Stir in blueberries (100g). Bake/microwave until set. Melt dark chocolate (20g) on top.",
+            Hot: "Warm Protein Oats: Combine **oats (80g)** and water/milk. Cook until done. Mix in **whey protein (50g)** *after* cooking. Top with **frozen blueberries (100g)** and **dark chocolate (20g)**.",
+            Cold: "Overnight Oats: The night before, mix **oats (80g)**, **whey protein (50g)**, and water/milk. Refrigerate. In the morning, top with **frozen blueberries (100g)** and **dark chocolate (20g)**.",
+            Baked: "Protein Baked Oats: Blend **oats (80g)**. Mix with **whey protein (50g)**, water/milk, and baking powder. Stir in **blueberries (100g)**. Bake/microwave until set. Melt **dark chocolate (20g)** on top.",
         };
 
         function generateMeal1() {
